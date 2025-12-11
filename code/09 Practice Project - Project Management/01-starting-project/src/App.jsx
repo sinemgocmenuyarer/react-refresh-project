@@ -24,23 +24,39 @@ function App() {
 
       return {
         ...prevState,
+        selectedProjectId: undefined,
         projects: [...prevState.projects, newProject],
       };
     });
   }
 
-  console.log(projectsState);
+  const handleCancelProject = () => {
+    setProjectState((prevState) => {
+      return {
+        ...prevState,
+        selectedProjectId: undefined,
+      };
+    });
+  };
 
   let content;
   if (projectsState?.selectedProjectId === null) {
-    content = <NewProject onSaveProject={handleSaveProject} />;
+    content = (
+      <NewProject
+        onSaveProject={handleSaveProject}
+        onCancelProject={handleCancelProject}
+      />
+    );
   } else if (projectsState?.selectedProjectId === undefined) {
     content = <NoProjectSelected onAddProject={handleAddProject} />;
   }
 
   return (
     <main className="h-screen my-8 flex gap-8">
-      <ProjectsSidebar onAddProject={handleAddProject} />
+      <ProjectsSidebar
+        onAddProject={handleAddProject}
+        projects={projectsState.projects}
+      />
       {content}
     </main>
   );
