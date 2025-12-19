@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { ProjectContext } from "../store/context";
 
-export const NewTask = ({ onAdd, onDelete }) => {
+export const NewTask = () => {
+  const { handleAddTask } = useContext(ProjectContext);
   const [enteredTask, setEnter] = useState("");
 
   function handleChange(event) {
@@ -12,7 +14,7 @@ export const NewTask = ({ onAdd, onDelete }) => {
       alert("Please enter a task");
       return;
     }
-    onAdd(enteredTask);
+    handleAddTask(enteredTask);
     setEnter("");
   }
 

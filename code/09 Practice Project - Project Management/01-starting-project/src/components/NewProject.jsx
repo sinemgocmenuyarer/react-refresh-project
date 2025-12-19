@@ -1,14 +1,16 @@
-import React, { useRef } from "react";
+import { useRef, useContext } from "react";
 import { Input } from "./Input";
 import { Modal } from "./Modal";
+import { ProjectContext } from "../store/context";
 
-export const NewProject = ({ onSaveProject, onCancelProject }) => {
+export const NewProject = () => {
+  const { handleSaveProject, handleCancelProject } = useContext(ProjectContext);
   const modal = useRef();
   const title = useRef();
   const desscription = useRef();
   const dueDate = useRef();
 
-  function handleSaveProject() {
+  function onSaveProject() {
     const enteredTitle = title.current.value;
     const enteredDescription = desscription.current.value;
     const enteredDueDate = dueDate.current.value;
@@ -27,7 +29,7 @@ export const NewProject = ({ onSaveProject, onCancelProject }) => {
       return;
     }
 
-    onSaveProject({
+    handleSaveProject({
       title: enteredTitle,
       description: enteredDescription,
       dueDate: enteredDueDate,
@@ -42,14 +44,14 @@ export const NewProject = ({ onSaveProject, onCancelProject }) => {
       <div className="w-[35rem] mt-16">
         <menu className="flex items-center justify-end gap-4 my-4">
           <li>
-            <button className="text-stone-80" onClick={onCancelProject}>
+            <button className="text-stone-80" onClick={handleCancelProject}>
               Cancel
             </button>
           </li>
           <li>
             <button
               className="px-6 py-2 bg-stone-800 rounded-md text-stone-50 hover:bg-stone-950"
-              onClick={handleSaveProject}
+              onClick={onSaveProject}
             >
               Save
             </button>

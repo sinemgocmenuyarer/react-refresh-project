@@ -1,4 +1,4 @@
-import { createContext, useState, useReducer, act } from "react";
+import { createContext, useReducer } from "react";
 import { DUMMY_PRODUCTS } from "../dummy-products.js";
 
 // This CardContext will be a react component in the end so we start with capital letter.
