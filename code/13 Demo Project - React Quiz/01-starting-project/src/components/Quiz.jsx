@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import questions from "../questions";
+import quizCompletingImage from "../assets/quiz-complete.png";
 
 export const Quiz = () => {
-  const [userAnswwers, setUserAnswers] = useState([]);
+  const [userAnswers, setUserAnswers] = useState([]);
 
-  const activeQuestionIndex = userAnswwers.length;
+  const activeQuestionIndex = userAnswers.length;
 
   function handleSelectedAnswer(selectedAnswer) {
     // We wanna update latest version of the state not the lose anything
@@ -12,6 +13,15 @@ export const Quiz = () => {
     setUserAnswers((prevState) => {
       return [...prevState, selectedAnswer];
     });
+  }
+
+  if (activeQuestionIndex === questions.length) {
+    return (
+      <div id="summary">
+        <img src={quizCompletingImage} alt="Tropy"></img>
+        <h2>Quiz Completed</h2>
+      </div>
+    );
   }
 
   // This is a method to shuffle the element of an array. This will work because Math rendom will return
