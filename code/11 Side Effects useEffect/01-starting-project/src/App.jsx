@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useCallback } from "react";
 
 import Places from "./components/Places.jsx";
 import { AVAILABLE_PLACES } from "./data.js";
@@ -95,7 +95,10 @@ function App() {
     }
   }
 
-  function handleRemovePlace(id) {
+  // this usecallback has been added to prevent infinite loop.
+  // In our case, there will be no infinite loop because the component will be removedfrom the UI with seModalIsOpen false
+  // But otherwise we would have the infinite loop because we are passing this function as dependency in delete confirmation
+  const handleRemove = useCallback(function handleRemovePlace(id) {
     setPickedPlaces((prevPickedPlaces) =>
       prevPickedPlaces.filter((place) => place.id !== selectedPlace.current)
     );
@@ -108,14 +111,14 @@ function App() {
         JSON.stringify(storedIds.filter((id) => id !== selectedPlace.current))
       );
     }
-  }
+  }, []);
 
   return (
     <>
       <Modal open={isModalOpen} onClose={handleStopRemovePlace}>
         <DeleteConfirmation
           onCancel={handleStopRemovePlace}
-          onConfirm={handleRemovePlace}
+          onConfirm={handleRemove}
         />
       </Modal>
 
